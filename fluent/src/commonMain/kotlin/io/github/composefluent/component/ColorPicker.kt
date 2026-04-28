@@ -725,7 +725,7 @@ fun ColorPicker(
                         onSelectedColorChanged(newColor)
                     },
                     range = 0..360,
-                    label = "Hug"
+                    label = "Hue"
                 )
                 ColorTextField(
                     value = (saturation * 100).toInt(),
@@ -1088,7 +1088,14 @@ private fun <T> ValueTextField(
                 return@TextField
             }
 
+            val isTextChanged = textFieldValue.text != it.text
+
             textFieldValue = it
+
+            // Don't update value if text is not changed
+            if (!isTextChanged) {
+                return@TextField
+            }
 
             val newValue = currentParse(it.text)
             if (newValue != null && newValue != value) {
