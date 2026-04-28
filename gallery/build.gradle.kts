@@ -246,22 +246,22 @@ fun AbstractMacOSPlatformSettings.applyCommonSetup() {
 
 tasks.register("desktopNativeRun") {
     group = "run"
-    dependsOn(tasks.named("runDebugExecutable${getTarget().uppercaseFirstChar()}"))
+    // dependsOn(tasks.named("runDebugExecutable${getTarget().uppercaseFirstChar()}"))
 }
 
 listOf("Release", "Debug").forEach { buildType ->
     listOf("createDistributable", "packageDistribution").forEach { name ->
-        tasks.register("${name}Native${buildType.uppercaseFirstChar()}ForCurrentOS") {
-            group = "compose desktop (native)"
-            val target = getTarget()
-            val taskName = if (name == "packageDistribution") {
-                val targetFormat = compose.desktop.nativeApplication.distributions.targetFormats.first { it.isCompatibleWithCurrentOS }
-                "package${targetFormat.name}Native${buildType}${target.uppercaseFirstChar()}"
-            } else {
-                "${name}Native${buildType}${target.uppercaseFirstChar()}"
-            }
-            dependsOn(tasks.named(taskName))
-        }
+//        tasks.register("${name}Native${buildType.uppercaseFirstChar()}ForCurrentOS") {
+//            group = "compose desktop (native)"
+//            val target = getTarget()
+//            val taskName = if (name == "packageDistribution") {
+//                val targetFormat = compose.desktop.nativeApplication.distributions.targetFormats.first { it.isCompatibleWithCurrentOS }
+//                "package${targetFormat.name}Native${buildType}${target.uppercaseFirstChar()}"
+//            } else {
+//                "${name}Native${buildType}${target.uppercaseFirstChar()}"
+//            }
+//            dependsOn(tasks.named(taskName))
+//        }
     }
 }
 
