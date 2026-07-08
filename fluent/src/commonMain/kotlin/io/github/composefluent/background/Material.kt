@@ -17,10 +17,11 @@ import androidx.compose.ui.unit.dp
 import io.github.composefluent.ExperimentalFluentApi
 import io.github.composefluent.FluentTheme
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.blur.HazeBlurStyle
+import dev.chrisbanes.haze.blur.HazeColorEffect
+import dev.chrisbanes.haze.blur.blurEffect
 import kotlin.jvm.JvmInline
 
 /**
@@ -51,7 +52,7 @@ fun MaterialContainerScope.Material(
 ) {
     Layer(
         modifier = modifier.materialOverlay(material = material, enabled = enabled),
-        color = if (enabled()) Color.Transparent else material.style.tints.first().color,
+        color = if (enabled()) Color.Transparent else (material.style.colorEffects.firstOrNull() as? HazeColorEffect.TintColor)?.color ?: Color.Transparent,
         border = border,
         backgroundSizing = BackgroundSizing.InnerBorderEdge
     ) {
@@ -94,10 +95,11 @@ private class MaterialContainerScopeImpl(boxScope: BoxScope) : MaterialContainer
     override fun Modifier.materialOverlay(material: Material, enabled: () -> Boolean): Modifier {
         return when {
             !enabled() -> this
-            else -> hazeEffect(
-                state = hazeState,
-                style = material.style
-            )
+            else -> hazeEffect(state = hazeState) {
+                blurEffect {
+                    style = material.style
+                }
+            }
         }
     }
 }
@@ -184,7 +186,7 @@ interface MaterialContainerScope : BoxScope {
 
 @JvmInline
 @Immutable
-value class Material(val style: HazeStyle)
+value class Material(val style: HazeBlurStyle)
 
 /**
  * Provides default [Material] configurations for common scenarios.
@@ -478,21 +480,21 @@ object MaterialDefaults {
         darkTintOpacity: Float,
         darkLuminosityOpacity: Float,
     ): Material = Material(
-        HazeStyle(
+        HazeBlurStyle(
             blurRadius = blurRadius,
             noiseFactor = noiseFactor,
             backgroundColor = backgroundColor,
-            tints = listOf(
-                HazeTint(
+            colorEffects = listOf(
+                HazeColorEffect.tint(
                     color = containerColor.copy(if (isDark) darkTintOpacity else lightTintOpacity),
                     blendMode = BlendMode.Hardlight,
                 ),
-                HazeTint(
+                HazeColorEffect.tint(
                     color = containerColor.copy(if (isDark) darkLuminosityOpacity else lightLuminosityOpacity),
                     blendMode = BlendMode.Luminosity,
                 )
             ),
-            fallbackTint = HazeTint(fallbackColor),
+            fallbackColorEffect = HazeColorEffect.tint(fallbackColor),
         )
     )
 

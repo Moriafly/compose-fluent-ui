@@ -1,6 +1,6 @@
 [versions]
 activityCompose = "1.12.2"
-haze = "1.7.1"
+haze = "2.0.0-alpha03"
 kotlin = "2.3.0"
 ksp = "2.3.4"
 compose = "1.10.0"
@@ -27,6 +27,8 @@ compose-components-resources = { module = "org.jetbrains.compose.components:comp
 compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
+haze-blur = { module = "dev.chrisbanes.haze:haze-blur", version.ref = "haze" }
+haze-blur-materials = { group = "dev.chrisbanes.haze", name = "haze-blur-materials", version.ref = "haze"}
 
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 ktor-client-java = "io.ktor:ktor-client-java:3.0.0"

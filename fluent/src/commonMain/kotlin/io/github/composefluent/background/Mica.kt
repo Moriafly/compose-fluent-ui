@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import io.github.composefluent.FluentTheme
 import io.github.composefluent.LocalContentColor
 import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.blur.blurEffect
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 
@@ -51,13 +52,20 @@ fun Mica(
         propagateMinConstraints = true
     ) {
         val hazeState = remember { HazeState() }
+        val micaStyle = MaterialDefaults.mica().style
         Box(
             propagateMinConstraints = true,
             modifier = Modifier.matchParentSize().hazeSource(state = hazeState)
         ) {
             background()
         }
-        Box(modifier = Modifier.fillMaxSize().hazeEffect(state = hazeState, style = MaterialDefaults.mica().style)) {
+        Box(
+            modifier = Modifier.fillMaxSize().hazeEffect(state = hazeState) {
+                blurEffect {
+                    style = micaStyle
+                }
+            }
+        ) {
             CompositionLocalProvider(
                 LocalContentColor provides FluentTheme.colors.text.text.primary
             ) {

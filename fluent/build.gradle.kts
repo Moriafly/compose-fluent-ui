@@ -24,6 +24,8 @@ kotlin {
             implementation(libs.compose.ui.util)
             implementation(libs.kotlinx.datetime)
             implementation(libs.haze)
+            implementation(libs.haze.blur)
+            implementation(libs.haze.blur.materials)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
