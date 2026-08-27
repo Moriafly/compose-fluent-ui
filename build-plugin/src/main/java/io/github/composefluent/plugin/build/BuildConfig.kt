@@ -28,7 +28,7 @@ object BuildConfig {
     }
 
     object Jvm {
-        const val jvmToolchainVersion = 17
-        val javaVersion = JavaVersion.VERSION_17
+        const val jvmToolchainVersion = 25
+        val javaVersion = JavaVersion.VERSION_25
     }
 }
