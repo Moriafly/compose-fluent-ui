@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         minSdk = BuildConfig.Android.minSdkVersion
-        targetSdk = BuildConfig.Android.compileSdkVersion
+        targetSdk = BuildConfig.Android.targetSdkVersion
         versionCode = 1
         versionName = BuildConfig.libraryVersion
         vectorDrawables {
