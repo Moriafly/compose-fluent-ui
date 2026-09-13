@@ -7,12 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import dev.chrisbanes.haze.HazeInput
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.blur.hazeBlur
+import dev.chrisbanes.haze.hazeSource
 import io.github.composefluent.FluentTheme
 import io.github.composefluent.LocalContentColor
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.blur.blurEffect
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
 
 /**
  * A composable that applies the Mica background effect.
@@ -60,11 +60,10 @@ fun Mica(
             background()
         }
         Box(
-            modifier = Modifier.fillMaxSize().hazeEffect(state = hazeState) {
-                blurEffect {
-                    style = micaStyle
-                }
-            }
+            modifier = Modifier.fillMaxSize().hazeBlur(
+                input = HazeInput.Sources(hazeState),
+                style = micaStyle
+            )
         ) {
             CompositionLocalProvider(
                 LocalContentColor provides FluentTheme.colors.text.text.primary
